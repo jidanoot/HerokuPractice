@@ -12,17 +12,6 @@ app.get('/', (req, res) => {
 const server = app.listen(process.env.PORT || 3000, () => {
     console.log("server is running")
 });
-// //////////////////////////////////
-
-// const PORT = process.env.PORT || 3000;
-// const INDEX = '/index.html';
-
-// const server = express()
-//     // .use((req, res) => res.render('pages/index'))
-//     .listen(PORT, () => console.log(`Listening on ${PORT}`));
-
-
-//////////////////////////////////////////////
 
 const io = socketio(server);
 

@@ -12,13 +12,6 @@
         <script src="/socket.io/socket.io.js"></script>
 
         <script>
-            var HOST = 'ws://https://hidden-harbor-19811.herokuapp.com/:3000';
-            var ws = new WebSocket(HOST);
-            var el = document.getElementById('server-time');
-            ws.onmessage = function(event) {
-                el.innerHTML = 'Server time: ' + event.data;
-            };
-
             const socket = io();
             var input = document.getElementById('input');
             var ranking = document.getElementById('ranking');
