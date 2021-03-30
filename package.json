@@ -3,13 +3,17 @@
     "version": "1.0.0",
     "description": "",
     "dependencies": {
+        "bootstrap": "^5.0.0-beta3",
         "ejs": "^3.1.6",
-        "express": "^4.17.1"
+        "express": "^4.17.1",
+        "socket.io": "^4.0.0"
     },
     "main": "index.js",
-    "devDependencies": {},
+    "devDependencies": {
+        "nodemon": "^2.0.7"
+    },
     "scripts": {
-        "start": "node index.js",
+        "start": "nodemon index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {

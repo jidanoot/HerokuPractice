@@ -7,8 +7,97 @@
 
 <body>
 
-    hello
+    <%- include ("../partials/body.ejs") %>
 
+        <div class="container">
+            <h2>Participant</h2>
+            <div id="members" class="row"></div>
+            <div id="ranking"></div>
+        </div>
+
+        <script src="../../index.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+
+        <script>
+            let socket = io();
+            let submitBtn = document.getElementById('submitBtn');
+            let input = document.getElementById('input');
+            let ranking = document.getElementById('ranking');
+            let members = document.getElementById('members');
+
+            function submit_answer() {
+                if (input.value) {
+                    socket.emit('send_answer', input.value);
+                    input.value = '';
+                } else {
+                    console.log('not input data');
+                }
+            }
+
+            function reset() {
+                socket.emit('reset');
+            }
+
+            socket.on('connect_room', function(data) {
+                // console.log(data);
+                members.innerHTML = "";
+                for (client in data.connected) {
+                    if (data.answers_status[client]) {
+                        var icon = '&#9989;';
+                    } else {
+                        var icon = '&#10067;';
+                    }
+                    var entry = document.createElement('div');
+                    entry.className = "card";
+                    entry.innerHTML = data.connected[client] + icon;
+                    members.appendChild(entry);
+                }
+                for (client in data.answers_ranking) {
+                    var item = document.createElement('li');
+                    item.textContent = data.answers_ranking[client];
+                    ranking.appendChild(item);
+                }
+
+            });
+            socket.on('send_answer', function(data) {
+                console.log('send answer');
+                members.innerHTML = "";
+                ranking.innerHTML = "";
+                for (client in data.connected) {
+                    if (data.answers_status[client]) {
+                        var icon = '&#9989;';
+                    } else {
+                        var icon = '&#10067;';
+                    }
+                    let entry = document.createElement('div');
+                    entry.className = "card";
+                    entry.innerHTML = data.connected[client] + icon;
+                    members.appendChild(entry);
+
+                }
+                for (client in data.answers_ranking) {
+                    let item = document.createElement('li');
+                    item.textContent = data.answers_ranking[client];
+                    ranking.appendChild(item);
+                }
+            });
+            socket.on('reset', function(data) {
+                console.log('reset');
+                members.innerHTML = "";
+                ranking.innerHTML = "";
+                for (client in data.connected) {
+                    if (data.answers_status[client]) {
+                        var icon = '&#9989;';
+                    } else {
+                        var icon = '&#10067;';
+                    }
+                    var entry = document.createElement('div');
+                    entry.className = "card";
+                    entry.innerHTML = data.connected[client] + icon;
+                    members.appendChild(entry);
+                }
+            });
+        </script>
 </body>
 
 </html>
