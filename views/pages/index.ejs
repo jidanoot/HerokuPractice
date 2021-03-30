@@ -15,15 +15,14 @@
             <div id="ranking"></div>
         </div>
 
-        <script src="../../index.js"></script>
         <script src="/socket.io/socket.io.js"></script>
 
         <script>
-            let socket = io();
-            let submitBtn = document.getElementById('submitBtn');
-            let input = document.getElementById('input');
-            let ranking = document.getElementById('ranking');
-            let members = document.getElementById('members');
+            const socket = io();
+            var input = document.getElementById('input');
+            var ranking = document.getElementById('ranking');
+            var members = document.getElementById('members');
+
 
             function submit_answer() {
                 if (input.value) {
