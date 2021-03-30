@@ -12,23 +12,40 @@ app.get('/', (req, res) => {
 const server = app.listen(process.env.PORT || 3000, () => {
     console.log("server is running")
 });
+// //////////////////////////////////
+
+// const PORT = process.env.PORT || 3000;
+// const INDEX = '/index.html';
+
+// const server = express()
+//     // .use((req, res) => res.render('pages/index'))
+//     .listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+
+//////////////////////////////////////////////
+
 const io = socketio(server);
 
 
+// note = ['username', 'status', 'point', ['socket1', 'socket2']]
 var connected = [];
+var online = [];
 var list = []
 var answers_status = [];
 var answers_ranking = [];
 var point = [];
-
-
-// http.listen(3000, () => {
-//     console.log('listening on *:3000');
-// });
+var curr_point = [];
+var test = [1, 2, 3, 4]
 
 // function Register(username, socketid) {
-
+//     let existing_regis = online[3].indexOf(username)
+//     if () {
+//         console.log("true");
+//     } else {
+//         console.log("false");
+//     }
 // }
+
 
 
 // for socket
