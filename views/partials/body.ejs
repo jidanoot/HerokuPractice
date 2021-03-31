@@ -6,14 +6,27 @@
         </div>
     </header>
 </div>
+
+<div class="container">
+    <div class="score-session">
+        <input id="input_username" class="margin-bottom score-input" autocomplete="off" placeholder="Input your name" />
+        <button class="btn btn-outline-secondary btn-lg" onclick="enterRoom()">Enter</button>
+    </div>
+</div>
+
 <div class="container">
     <div class="score-session">
         <input id="input" class="margin-bottom score-input" autocomplete="off" />
         <button class="btn btn-outline-secondary btn-lg" onclick="submit_answer()">Send Answer</button>
     </div>
 </div>
+
 <div class="container">
     <h2>Participant</h2>
     <div id="members" class="row"></div>
-    <div id="ranking"></div>
+    <h2>Answer Ranking</h2>
+
+    <ol>
+        <div id="ranking"></div>
+    </ol>
 </div>

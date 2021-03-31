@@ -14,16 +14,29 @@
         <script>
             const socket = io();
             var input = document.getElementById('input');
+            var input_username = document.getElementById('input_username');
             var ranking = document.getElementById('ranking');
             var members = document.getElementById('members');
 
+
+            function enterRoom() {
+                if (input_username.value) {
+                    var item = document.createElement('li');
+                    item.textContent = input_username.value;
+                    ranking.appendChild(item);
+                    socket.emit('regist', input_username.value);
+
+                } else {
+                    input_username.placeholder = "INPUT YOUR NAME PLEASE!";
+                }
+            }
 
             function submit_answer() {
                 if (input.value) {
                     socket.emit('send_answer', input.value);
                     input.value = '';
                 } else {
-                    console.log('not input data');
+                    input.placeholder = "point?";
                 }
             }
 
@@ -32,61 +45,60 @@
             }
 
             socket.on('connect_room', function(data) {
-                // console.log(data);
                 members.innerHTML = "";
-                for (client in data.connected) {
-                    if (data.answers_status[client]) {
+                ranking.innerHTML = "";
+
+                for (i in data.online) {
+                    if (data.online[i][1]) {
                         var icon = '&#9989;';
                     } else {
                         var icon = '&#10067;';
                     }
                     var entry = document.createElement('div');
                     entry.className = "card";
-                    entry.innerHTML = data.connected[client] + icon;
+                    entry.innerHTML = data.online[i][0] + icon;
                     members.appendChild(entry);
                 }
-                for (client in data.answers_ranking) {
+                for (i in data.answers_ranking) {
                     var item = document.createElement('li');
-                    item.textContent = data.answers_ranking[client];
+                    item.textContent = data.answers_ranking[i];
                     ranking.appendChild(item);
                 }
 
             });
             socket.on('send_answer', function(data) {
-                console.log('send answer');
                 members.innerHTML = "";
                 ranking.innerHTML = "";
-                for (client in data.connected) {
-                    if (data.answers_status[client]) {
+                for (i in data.online) {
+                    if (data.online[i][1]) {
                         var icon = '&#9989;';
                     } else {
                         var icon = '&#10067;';
                     }
                     let entry = document.createElement('div');
                     entry.className = "card";
-                    entry.innerHTML = data.connected[client] + icon;
+                    entry.innerHTML = data.online[i][0] + icon;
                     members.appendChild(entry);
 
                 }
-                for (client in data.answers_ranking) {
+                for (i in data.answers_ranking) {
                     let item = document.createElement('li');
-                    item.textContent = data.answers_ranking[client];
+                    item.textContent = data.answers_ranking[i];
                     ranking.appendChild(item);
                 }
             });
             socket.on('reset', function(data) {
-                console.log('reset');
                 members.innerHTML = "";
                 ranking.innerHTML = "";
-                for (client in data.connected) {
-                    if (data.answers_status[client]) {
+                for (i in data.online) {
+                    if (data.online[i][1]) {
                         var icon = '&#9989;';
                     } else {
                         var icon = '&#10067;';
                     }
                     var entry = document.createElement('div');
                     entry.className = "card";
-                    entry.innerHTML = data.connected[client] + icon;
+                    entry.innerHTML = data.online[i][0] + icon;
                     members.appendChild(entry);
                 }
             });
