@@ -1,279 +1,118 @@
-<div class="container padding-top">
-    <header>
-        <div class="display-flex-element">
-            <h1>Point Estimate</h1>
-            <button id="reveadBtn" type="button" class="margin-top btn btn-outline-secondary btn-lg margin-right" data-toggle="modal" data-target="#myModal">Reveal Point</button>
-            <!-- <button id="revealBtn" class="margin-top btn btn-outline-secondary btn-lg margin-right">Reveal Point</button> -->
-            <button class="margin-top btn btn-outline-secondary btn-lg" onclick="reset()">Reset Board</button>
-            <!-- <h2>Modal Example</h2> -->
-            <!-- Trigger the modal with a button -->
-
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Access to Reveal Point</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>Return to putting the point is easier</p>
-                            <input id="input_admin" class="margin-bottom admin-modal" maxlength="20" autocomplete="off" />
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="reveal()">Access</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </header>
-</div>
-
-
-<div class="container">
-    <div class="score-session">
-        <input id="input_username" class="margin-bottom score-input" maxlength="20" autocomplete="off" placeholder="Input your name" />
-        <button class="btn btn-outline-secondary btn-lg" onclick="enterRoom()">Enter</button>
-    </div>
-</div>
-
-<div class="container">
-    <div class="score-session">
-        <input id="input_point" class="margin-bottom score-input" maxlength="20" autocomplete="off" />
-        <button id="pointBtn" class="btn btn-outline-secondary btn-lg" onclick="submit_answer()">Send Answer</button>
-    </div>
-</div>
-
-<div class="container">
-    <h2 class="text-center">Participant</h2>
-    <!-- <div id="members" class="row"></div> -->
-    <h2 class="text-center">Answer Ranking</h2>
-
-    <ol>
-    </ol>
-    <ul class="list-group">
-        <div id="ranking"></div>
-    </ul>
-</div>
-
-
-<section id="team" class="pb-5">
+<div id="page_login" class="full-heigh">
     <div class="container">
-        <h5 class="section-title h1">TEAM MEMBER</h5>
-        <div class="row">
-            <!-- Team member -->
-            <div id="members_element" class="col-xs-12 col-sm-6 col-md-4" style="display: none;">
-                <div class="frontside">
-                    <p><img src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_01.png"></p>
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <h4>Sunlimetech</h4>
+        <div class="input-session">
+            <input id="input_username" class="margin-bottom input-input" maxlength="20" autocomplete="off" placeholder="Input your name" />
+            <button class="btn btn-outline-secondary btn-lg" onclick="enterRoom()">Enter</button>
+        </div>
+    </div>
+</div>
+
+<div id="page_estimate" style="display: block;">
+    <div class="container">
+        <header class="padding-top">
+            <div class="display-flex-element">
+                <h1 style="flex: auto;">Time to Estimate Point</h1>
+                <button id="reveadBtn" type="button" class="margin-top btn btn-outline-secondary btn-lg margin-right" data-toggle="modal" data-target="#myModal">Reveal Point</button>
+                <button type="password" class="margin-top btn btn-outline-secondary btn-lg" onclick="reset()">Reset Board</button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Access to Reveal Point</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Fighting</p>
+                                <input id="input_admin" class="margin-bottom admin-modal" maxlength="20" autocomplete="off" />
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="reveal()">Access</button>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
-            <div id="members" class="row"></div>
-
-            <!-- ./Team member -->
-            <!-- Team member -->
-            <!-- <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-                    <div class="mainflip">
-                        <div class="frontside">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_02.png" alt="card image"></p>
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.</p>
-                                    <a href="https://www.fiverr.com/share/qb8D02" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="backside">
-                            <div class="card">
-                                <div class="card-body text-center mt-4">
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
-                                    <ul class="list-inline">
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-facebook"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-skype"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-google"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- ./Team member -->
-            <!-- Team member -->
-            <!-- <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-                    <div class="mainflip">
-                        <div class="frontside">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_03.png" alt="card image"></p>
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.</p>
-                                    <a href="https://www.fiverr.com/share/qb8D02" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="backside">
-                            <div class="card">
-                                <div class="card-body text-center mt-4">
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
-                                    <ul class="list-inline">
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-facebook"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-skype"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-google"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- ./Team member -->
-            <!-- Team member -->
-            <!-- <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-                    <div class="mainflip">
-                        <div class="frontside">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_04.jpg" alt="card image"></p>
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.</p>
-                                    <a href="https://www.fiverr.com/share/qb8D02" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="backside">
-                            <div class="card">
-                                <div class="card-body text-center mt-4">
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
-                                    <ul class="list-inline">
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-facebook"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-skype"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-google"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- ./Team member -->
-            <!-- Team member -->
-            <!-- <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-                    <div class="mainflip">
-                        <div class="frontside">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_05.png" alt="card image"></p>
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.</p>
-                                    <a href="https://www.fiverr.com/share/qb8D02" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="backside">
-                            <div class="card">
-                                <div class="card-body text-center mt-4">
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
-                                    <ul class="list-inline">
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-facebook"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-skype"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                <i class="fa fa-google"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- ./Team member -->
-
-
-        </div>
+        </header>
     </div>
-</section>
+
+    <section>
+
+        <div class="container">
+            <div class="input-session">
+                <input id="input_point" class="set-center margin-bottom input-input" maxlength="10" autocomplete="off" />
+                <button id="pointBtn" class="set-center btn btn-outline-secondary btn-lg" onclick="submit_answer()">Send Answer</button>
+            </div>
+        </div>
+
+
+    </section>
+
+    <section id="team" class="pb-5">
+        <div class="container">
+            <h5 class="section-title h1">TEAM MEMBER</h5>
+            <div class="row">
+                <div id="members_element" class="col-xs-12 col-sm-6 col-md-4" style="display: none;">
+                    <div class="frontside">
+                        <p class="card-addon"><img src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_01.png"></p>
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h4>Sunlimetech</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="members" class="row"></div>
+
+
+            </div>
+        </div>
+    </section>
+
+    <section style="padding-top: 0;">
+        <!-- <div class="container"> -->
+        <!-- <h2 class="text-center">Participant</h2> -->
+        <!-- <div id="members" class="row"></div> -->
+        <!-- <h2 class="text-center">Answer Ranking</h2> -->
+
+        <!-- <ol>
+        </ol>
+        <ul class="list-group">
+            <div id="ranking"></div>
+        </ul> -->
+
+        <div class="table-title">
+            <h2>Answer Ranking</h2>
+        </div>
+        <table class="table-fill">
+            <thead>
+                <tr>
+                    <th class="text-left">Name</th>
+                    <th class="text-left">Point(hour)</th>
+                </tr>
+            </thead>
+            <tbody id="ranking" class="table-hover">
+                <tr id="ranking_template">
+                    <td class="text-left">January</td>
+                    <td class="text-left">$ 50,000.00</td>
+                </tr>
+                <tr>
+                    <td class="text-left">January</td>
+                    <td class="text-left">$ 50,000.00</td>
+                </tr>
+                <tr>
+                    <td class="text-left">January</td>
+                    <td class="text-left">$ 50,000.00</td>
+                </tr>
+
+            </tbody>
+        </table>
+        <!-- </div> -->
+    </section>
+
+
+</div>

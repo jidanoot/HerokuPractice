@@ -1,6 +1,7 @@
 const express = require('express');
 const socketio = require('socket.io');
 const app = express();
+var login_status = false;
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -124,6 +125,7 @@ io.on('connection', (socket) => {
     socket.on('regist', (username) => {
         Register(username, socket.id);
         Reveal();
+        // login_status = true;
         io.sockets.emit('connect_room', { online: online, answers_ranking: answers_ranking });
         io.sockets.emit('reveal_answer', { answers_ranking: answers_ranking, curr_point: curr_point, reveal_status: reveal_status });
     });
