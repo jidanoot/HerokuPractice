@@ -133,27 +133,35 @@
             }
 
             socket.on('connect_room', function(data) {
-                page_login.style.display = "none";
-                setMember(data);
-                setRanking(data, false);
-                page_estimate.style.display = "block";
+                if (login_status) {
+                    page_login.style.display = "none";
+                    setMember(data);
+                    setRanking(data, false);
+                    page_estimate.style.display = "block";
+                }
 
             });
 
             socket.on('send_answer', function(data) {
-                setMember(data);
-                setRanking(data, false);
+                if (login_status) {
+                    setMember(data);
+                    setRanking(data, false);
+                }
             });
 
             socket.on('reset', function(data) {
-                setMember(data);
-                setBtn(false);
-                ranking.innerHTML = "";
+                if (login_status) {
+                    setMember(data);
+                    setBtn(false);
+                    ranking.innerHTML = "";
+                }
             });
 
             socket.on('reveal_answer', function(data) {
-                setRanking(data, data.reveal_status);
-                setBtn(data.reveal_status);
+                if (login_status) {
+                    setRanking(data, data.reveal_status);
+                    setBtn(data.reveal_status);
+                }
             });
         </script>
 </body>

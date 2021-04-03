@@ -14,6 +14,11 @@ html {
 h1 {
     float: left;
     overflow-wrap: anywhere;
+    color: #333333;
+}
+
+h2 {
+    color: #333333;
 }
 
 .user-point {
@@ -33,9 +38,11 @@ h1 {
 }
 
 .input-session {
-    width: 70%;
     display: grid;
     margin-inline: auto;
+    height: inherit;
+    width: 50%;
+    align-content: center;
 }
 
 .admin-modal {
@@ -64,8 +71,12 @@ input {
     font-size: large;
 }
 
-input:hover {
-    border-color: #333333;
+input:focus {
+    border-color: #4E5066;
+}
+
+button:focus {
+    border-color: #4E5066;
 }
 
 .input-input {
@@ -97,8 +108,8 @@ input:hover {
 }
 
 .btn:hover {
-    background-color: #333333;
-    color: white;
+    background-color: #4E5066;
+    color: #FFFFFF;
 }
 
 .row {
@@ -122,7 +133,7 @@ section .section-title {
 }
 
 #team .card {
-    background: #ffffff;
+    background: #FFFFFF;
     border: 4px solid;
     border-color: #333333;
     overflow-wrap: anywhere;
@@ -145,7 +156,6 @@ img {
 
 p {
     margin: 10px;
-    /* text-align: center; */
 }
 
 .full-heigh {
@@ -156,30 +166,11 @@ p {
     transform: translate(-6%, 60%);
 }
 
-
-/* .transform-img {
-} */
-
 h4 {
     margin: 0;
     color: #333333 !important;
-    /* padding-top: 16px; */
     font-size: large;
 }
-
-
-/* /////////////////////////////////////// */
-
-
-/* @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
-
-body {
-  background-color: #3e94ec;
-  font-family: "Roboto", helvetica, arial, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  text-rendering: optimizeLegibility;
-} */
 
 div.table-title {
     display: block;
@@ -263,19 +254,12 @@ tr:nth-child(odd) td {
 tr:nth-child(odd) td.row-highlight {
     background: #4E5066;
     color: #FFFFFF;
-    /* border-top: 1px solid #22262e; */
 }
 
 td.row-highlight {
     background: #4E5066;
     color: #FFFFFF;
-    /* border-top: 1px solid #22262e; */
 }
-
-
-/* tr:nth-child(odd):hover td {
-    background: #4E5066;
-} */
 
 tr:last-child td:first-child {
     border-bottom-left-radius: 3px;

@@ -1,7 +1,6 @@
 const express = require('express');
 const socketio = require('socket.io');
 const app = express();
-var login_status = false;
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -99,25 +98,24 @@ function Reveal() {
 }
 
 function Disconnect(user_socketid) {
-
-    if (online.length > 0) {
-        while (disconnect_flag) {
-            let check = GetUserIndexBySocket(user_socketid);
-            if (check > -1) {
-                let index_user = GetUserIndexBySocket(user_socketid);
+    for (var i = online.length - 1; i >= 0; i--) {
+        let index_user = GetUserIndexBySocket(user_socketid);
+        if (index_user > -1) {
+            for (j in online[index_user][2]) {
                 let index_socket = online[index_user][2].indexOf(user_socketid);
+                if (index_socket > -1) {
+                    online[index_user][2].splice(index_socket, 1);
+                } else { break; }
+            }
+            if (online[index_user][2].length < 1) {
                 let index_ranking = answers_ranking.indexOf(online[index_user][0]);
-                online[index_user][2].splice(index_socket, 1);
-                if (online[index_user][2].length < 1) {
-                    online.splice(index_user, 3);
-                    if (index_ranking > -1) {
-                        answers_ranking.splice(index_ranking, 1);
-                        curr_point.splice(index_ranking, 1);
-                    }
+                online.splice(index_user, 3);
+                if (index_ranking > -1) {
+                    answers_ranking.splice(index_ranking, 1);
+                    curr_point.splice(index_ranking, 1);
                 }
             }
         }
-        disconnect_flag = true;
     }
 }
 
@@ -125,7 +123,6 @@ io.on('connection', (socket) => {
     socket.on('regist', (username) => {
         Register(username, socket.id);
         Reveal();
-        // login_status = true;
         io.sockets.emit('connect_room', { online: online, answers_ranking: answers_ranking });
         io.sockets.emit('reveal_answer', { answers_ranking: answers_ranking, curr_point: curr_point, reveal_status: reveal_status });
     });
