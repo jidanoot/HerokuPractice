@@ -20,7 +20,6 @@ var answers_ranking = [];
 var curr_point = [];
 var reveal_status = false;
 var disconnect_flag = false;
-// var disconnect_flag_ranking = false;
 
 
 function Register(username, socketid) {
@@ -158,9 +157,9 @@ io.on('connection', (socket) => {
                 io.sockets.emit('user_disconnect', { disconnect_name: disconnect_name });
                 disconnect_flag = false;
             }
-            Reveal();
-            io.sockets.emit('reveal_answer', { answers_ranking: answers_ranking, curr_point: curr_point, reveal_status: reveal_status });
         }
+        Reveal();
+        io.sockets.emit('reveal_answer', { answers_ranking: answers_ranking, curr_point: curr_point, reveal_status: reveal_status });
     });
 
 });
