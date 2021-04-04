@@ -63,7 +63,6 @@ function UpdateScore(user_socket, score) {
     let check_user_socket = GetUserIndexBySocket(user_socket);
     if (check_user_socket > -1) {
         online[check_user_socket][1] = true;
-        console.log(online);
         let existing = answers_ranking.indexOf(online[check_user_socket][0]);
         if (existing > -1) {
             answers_ranking.splice(existing, 1);
@@ -120,7 +119,7 @@ function Disconnect(user_socketid) {
     }
 }
 
-io.on('connection', (socket) => {
+io.on('connection', socket => {
     socket.on('regist', (username) => {
         Register(username, socket.id);
         Reveal();
@@ -150,6 +149,8 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         let disconnect_id = GetUserIndexBySocket(socket.id);
+        // console.log(socket.id);
+        // console.log(disconnect_id);
         if (disconnect_id > -1) {
             let disconnect_name = online[disconnect_id][0];
             Disconnect(socket.id);
@@ -157,9 +158,14 @@ io.on('connection', (socket) => {
                 io.sockets.emit('user_disconnect', { disconnect_name: disconnect_name });
                 disconnect_flag = false;
             }
+            Reveal();
+            // console.log(reveal_status);
+            // console.log(answers_ranking);
+            io.sockets.emit('reveal_answer', { answers_ranking: answers_ranking, curr_point: curr_point, reveal_status: reveal_status });
+            // console.log(online);
+            // console.log(answers_ranking);
+
         }
-        Reveal();
-        io.sockets.emit('reveal_answer', { answers_ranking: answers_ranking, curr_point: curr_point, reveal_status: reveal_status });
     });
 
 });

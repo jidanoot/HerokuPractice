@@ -145,7 +145,6 @@
                             if (chekc_oeder != undefined) {
                                 let inner_check_order = chekc_oeder.childNodes[1].innerHTML;
                                 if (inner_check_order != data.answers_ranking[i]) {
-                                    console.log('remove child');
                                     let swap = ranking.removeChild(check_element_rank);
                                     if (data.answers_ranking[i] === login_username) {
                                         swap.childNodes[3].innerHTML = last_point;
@@ -197,14 +196,14 @@
 
             socket.on('reveal_answer', function(data) {
                 if (login_status) {
-                    console.log('enter reveal_answer');
-                    console.log(data.reveal_status);
                     setRanking(data, data.reveal_status);
                     setBtn(data.reveal_status);
                 }
             });
 
             socket.on('user_disconnect', function(data) {
+                // console.log(data.reveal_status);
+                // console.log(data.answers_ranking);
                 check_id += data.disconnect_name;
                 check_id_rank += data.disconnect_name;
                 check_element = document.getElementById(check_id);
