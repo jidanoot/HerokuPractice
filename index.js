@@ -9,6 +9,9 @@ app.get('/', (req, res) => {
     res.render('pages/index');
 });
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 const server = app.listen(process.env.PORT || 3000, () => {
     console.log("server is running")
 });
@@ -149,8 +152,6 @@ io.on('connection', socket => {
 
     socket.on('disconnect', () => {
         let disconnect_id = GetUserIndexBySocket(socket.id);
-        // console.log(socket.id);
-        // console.log(disconnect_id);
         if (disconnect_id > -1) {
             let disconnect_name = online[disconnect_id][0];
             Disconnect(socket.id);
@@ -159,12 +160,10 @@ io.on('connection', socket => {
                 disconnect_flag = false;
             }
             Reveal();
-            // console.log(reveal_status);
-            // console.log(answers_ranking);
             io.sockets.emit('reveal_answer', { answers_ranking: answers_ranking, curr_point: curr_point, reveal_status: reveal_status });
-            // console.log(online);
-            // console.log(answers_ranking);
-
+        }
+        if (online.length == 0) {
+            ResetBoard();
         }
     });
 

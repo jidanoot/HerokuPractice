@@ -72,11 +72,10 @@
             }
 
             function reveal() {
-                if (login_status) {
-                    if (input_admin.value) {
-                        socket.emit('reveal', input_admin.value);
-                        input_admin.value = '';
-                    }
+                let input_admin_checking = input_admin.value.trim();
+                if (input_admin_checking && login_status) {
+                    socket.emit('reveal', input_admin_checking);
+                    input_admin.value = '';
                 }
             }
 
@@ -202,8 +201,6 @@
             });
 
             socket.on('user_disconnect', function(data) {
-                // console.log(data.reveal_status);
-                // console.log(data.answers_ranking);
                 check_id += data.disconnect_name;
                 check_id_rank += data.disconnect_name;
                 check_element = document.getElementById(check_id);
