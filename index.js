@@ -19,7 +19,8 @@ var online = [];
 var answers_ranking = [];
 var curr_point = [];
 var reveal_status = false;
-var disconnect_flag = true;
+var disconnect_flag = false;
+// var disconnect_flag_ranking = false;
 
 
 function Register(username, socketid) {
@@ -28,11 +29,11 @@ function Register(username, socketid) {
         if (existing_name > -1) {
             online[existing_name][2].push(socketid);
         } else {
-            let new_user = [username, 0, [socketid]];
+            let new_user = [username, false, [socketid]];
             online.push(new_user);
         }
     } else {
-        let new_user = [username, 0, [socketid]];
+        let new_user = [username, false, [socketid]];
         online.push(new_user);
     }
 }
@@ -56,29 +57,30 @@ function GetUserIndexBySocket(user_socket) {
             return index;
         }
     }
-    disconnect_flag = false;
     return existing_regis;
 }
 
 function UpdateScore(user_socket, score) {
     let check_user_socket = GetUserIndexBySocket(user_socket);
-    online[check_user_socket][1] = 1;
-    console.log(online);
-    let existing = answers_ranking.indexOf(online[check_user_socket][0]);
-    if (existing > -1) {
-        answers_ranking.splice(existing, 1);
-        answers_ranking.push(online[check_user_socket][0]);
-        curr_point.splice(existing, 1);
-        curr_point.push(score);
-    } else {
-        answers_ranking.push(online[check_user_socket][0]);
-        curr_point.push(score);
+    if (check_user_socket > -1) {
+        online[check_user_socket][1] = true;
+        console.log(online);
+        let existing = answers_ranking.indexOf(online[check_user_socket][0]);
+        if (existing > -1) {
+            answers_ranking.splice(existing, 1);
+            answers_ranking.push(online[check_user_socket][0]);
+            curr_point.splice(existing, 1);
+            curr_point.push(score);
+        } else {
+            answers_ranking.push(online[check_user_socket][0]);
+            curr_point.push(score);
+        }
     }
 }
 
 function ResetBoard() {
     for (index in online) {
-        online[index][1] = 0;
+        online[index][1] = false;
     }
     answers_ranking = [];
     curr_point = [];
@@ -90,11 +92,10 @@ function Reveal() {
     let count_ranking = answers_ranking.length;
     if (count_online === count_ranking) {
         reveal_status = true;
-        return reveal_status;
     } else {
         reveal_status = false;
-        return reveal_status;
     }
+    return reveal_status;
 }
 
 function Disconnect(user_socketid) {
@@ -110,6 +111,7 @@ function Disconnect(user_socketid) {
             if (online[index_user][2].length < 1) {
                 let index_ranking = answers_ranking.indexOf(online[index_user][0]);
                 online.splice(index_user, 3);
+                disconnect_flag = true;
                 if (index_ranking > -1) {
                     answers_ranking.splice(index_ranking, 1);
                     curr_point.splice(index_ranking, 1);
@@ -148,10 +150,17 @@ io.on('connection', (socket) => {
 
 
     socket.on('disconnect', () => {
-        Disconnect(socket.id);
-        io.sockets.emit('connect_room', { online: online, answers_ranking: answers_ranking });
-        Reveal();
-        io.sockets.emit('reveal_answer', { answers_ranking: answers_ranking, curr_point: curr_point, reveal_status: reveal_status });
+        let disconnect_id = GetUserIndexBySocket(socket.id);
+        if (disconnect_id > -1) {
+            let disconnect_name = online[disconnect_id][0];
+            Disconnect(socket.id);
+            if (disconnect_flag) {
+                io.sockets.emit('user_disconnect', { disconnect_name: disconnect_name });
+                disconnect_flag = false;
+            }
+            Reveal();
+            io.sockets.emit('reveal_answer', { answers_ranking: answers_ranking, curr_point: curr_point, reveal_status: reveal_status });
+        }
     });
 
 });

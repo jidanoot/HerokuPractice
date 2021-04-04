@@ -17,14 +17,13 @@
             const socket = io();
             var input_point = document.getElementById('input_point');
             var input_username = document.getElementById('input_username');
-            var ranking = document.getElementById('ranking');
+            var ranking = document.querySelector('#ranking');
             var members = document.getElementById('members');
             var input_admin = document.getElementById('input_admin');
             var reveal_button = document.getElementById('reveadBtn');
             var point_button = document.getElementById('pointBtn');
             var members_element = document.querySelector('#members_element');
             var ranking_template = document.querySelector('#ranking_template');
-            var user_point = document.getElementById('user_point');
 
             var waiting_icon = "Hour-Glass-512.png";
             var submit_icon = "Submit-01-512.png";
@@ -35,6 +34,10 @@
             var login_status = false;
             var login_username;
             var last_point;
+            var check_id = "cloneID-";
+            var check_id_rank = "#cloneRank-";
+            var check_element = document.getElementById(check_id);
+            var check_element_rank = document.querySelector(check_id_rank);
 
             function enterRoom() {
                 login_username = input_username.value.trim();
@@ -64,7 +67,6 @@
                 if (login_status) {
                     socket.emit('reset');
                     input_point.value = '';
-                    user_point.innerHTML = '';
                     last_point = 0;
                 }
             }
@@ -79,7 +81,6 @@
             }
 
             function setBtn(status) {
-                input_point.value = "";
                 input_point.disabled = status;
                 reveal_button.disabled = status;
                 point_button.disabled = status;
@@ -87,48 +88,87 @@
 
             function setMember(data) {
                 if (login_status) {
-                    members.innerHTML = "";
                     for (i in data.online) {
-                        let clone = members_element.cloneNode(true);
-                        clone.style.display = "block";
-                        clone.id = "cloneID-" + data.online[i][0];
-                        clone.childNodes[1].childNodes[3].childNodes[1].childNodes[1].innerHTML = data.online[i][0];
-                        if (data.online[i][1]) {
-                            clone.childNodes[1].childNodes[1].childNodes[0].src = submit_icon;
+                        check_id += data.online[i][0];
+                        check_element = document.getElementById(check_id);
+                        if (check_element === null) {
+                            let clone = members_element.cloneNode(true);
+                            clone.style.display = "block";
+                            clone.id = "cloneID-" + data.online[i][0];
+                            clone.childNodes[1].childNodes[3].childNodes[1].childNodes[1].innerHTML = data.online[i][0];
+                            if (data.online[i][1]) {
+                                clone.childNodes[1].childNodes[1].childNodes[0].src = submit_icon;
+                            } else {
+                                clone.childNodes[1].childNodes[1].childNodes[0].src = waiting_icon;
+                            }
+                            if (login_username === data.online[i][0]) {
+                                clone.childNodes[1].childNodes[3].style.background = '#d5dde5';
+                            }
+                            members.appendChild(clone);
                         } else {
-                            clone.childNodes[1].childNodes[1].childNodes[0].src = waiting_icon;
+                            if (data.online[i][1]) {
+                                check_element.childNodes[1].childNodes[1].childNodes[0].src = submit_icon;
+                            } else {
+                                check_element.childNodes[1].childNodes[1].childNodes[0].src = waiting_icon;
+                            }
                         }
-                        if (login_username === data.online[i][0]) {
-                            clone.childNodes[1].childNodes[3].style.background = '#d5dde5';
-                        }
-                        members.appendChild(clone);
+                        check_id = "cloneID-";
                     }
                 }
             }
 
             function setRanking(data, reveal_status) {
-                ranking.innerHTML = "";
-                for (i in data.answers_ranking) {
-                    let clone_ranking = ranking_template.cloneNode(true);
-                    clone_ranking.style.display = "table-row";
-                    clone_ranking.id = "cloneRank-" + data.answers_ranking[i];
-                    clone_ranking.childNodes[1].innerHTML = data.answers_ranking[i];
-                    if (reveal_status) {
-                        clone_ranking.childNodes[3].innerHTML = data.curr_point[i];
-                        if (login_username === data.answers_ranking[i]) {
-                            clone_ranking.childNodes[1].classList.add('row-highlight');
-                            clone_ranking.childNodes[3].classList.add('row-highlight');
-                        }
-                    } else {
-                        if (login_username === data.answers_ranking[i]) {
-                            clone_ranking.childNodes[3].innerHTML = last_point;
-                            clone_ranking.childNodes[1].classList.add('row-highlight');
-                            clone_ranking.childNodes[3].classList.add('row-highlight');
+                if (login_status) {
+                    for (i in data.answers_ranking) {
+                        check_id_rank += data.answers_ranking[i];
+                        check_element_rank = document.querySelector(check_id_rank);
+                        if (check_element_rank === null) {
+                            let clone_ranking = ranking_template.cloneNode(true);
+                            clone_ranking.style.display = "table-row";
+                            clone_ranking.id = "cloneRank-" + data.answers_ranking[i];
+                            clone_ranking.childNodes[1].innerHTML = data.answers_ranking[i];
+                            if (login_username === data.answers_ranking[i]) {
+                                clone_ranking.childNodes[3].innerHTML = last_point;
+                                clone_ranking.childNodes[1].classList.add('row-highlight');
+                                clone_ranking.childNodes[3].classList.add('row-highlight');
+                            } else {
+                                if (reveal_status) {
+                                    clone_ranking.childNodes[3].innerHTML = data.curr_point[i];
+                                } else {
+                                    clone_ranking.childNodes[3].innerHTML = 'Answered';
+                                }
+                            }
+                            ranking.appendChild(clone_ranking);
+                            check_id_rank = "#cloneRank-";
                         } else {
-                            clone_ranking.childNodes[3].innerHTML = 'Answered';
+                            let chekc_oeder = ranking.children[parseInt(i) + 1];
+                            if (chekc_oeder != undefined) {
+                                let inner_check_order = chekc_oeder.childNodes[1].innerHTML;
+                                if (inner_check_order != data.answers_ranking[i]) {
+                                    console.log('remove child');
+                                    let swap = ranking.removeChild(check_element_rank);
+                                    if (data.answers_ranking[i] === login_username) {
+                                        swap.childNodes[3].innerHTML = last_point;
+                                    }
+                                    ranking.appendChild(swap);
+                                    check_id_rank = "#cloneRank-";
+                                } else {
+                                    if (reveal_status) {
+                                        check_element_rank.childNodes[3].innerHTML = data.curr_point[i];
+                                    } else {
+                                        if (data.answers_ranking[i] === login_username) {
+                                            check_element_rank.childNodes[3].innerHTML = last_point;
+                                        } else {
+                                            check_element_rank.childNodes[3].innerHTML = 'Answered';
+                                        }
+                                    }
+                                }
+                            }
+
                         }
+                        check_id_rank = "#cloneRank-";
                     }
-                    ranking.appendChild(clone_ranking);
+
                 }
             }
 
@@ -136,7 +176,6 @@
                 if (login_status) {
                     page_login.style.display = "none";
                     setMember(data);
-                    setRanking(data, false);
                     page_estimate.style.display = "block";
                 }
 
@@ -145,7 +184,6 @@
             socket.on('send_answer', function(data) {
                 if (login_status) {
                     setMember(data);
-                    setRanking(data, false);
                 }
             });
 
@@ -159,9 +197,27 @@
 
             socket.on('reveal_answer', function(data) {
                 if (login_status) {
+                    console.log('enter reveal_answer');
+                    console.log(data.reveal_status);
                     setRanking(data, data.reveal_status);
                     setBtn(data.reveal_status);
                 }
+            });
+
+            socket.on('user_disconnect', function(data) {
+                check_id += data.disconnect_name;
+                check_id_rank += data.disconnect_name;
+                check_element = document.getElementById(check_id);
+                check_element_rank = document.querySelector(check_id_rank);
+                if (login_status && check_element != null) {
+                    check_element.remove();
+                    if (check_element_rank != null) {
+                        ranking.removeChild(check_element_rank);
+                    }
+                }
+                check_id = "cloneID-";
+                check_id_rank = "#cloneRank-";
+
             });
         </script>
 </body>
